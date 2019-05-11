@@ -78,6 +78,32 @@ def knapsack(capacity, w, value,n):
             return max(value[n-1]+knapsack(capacity-w[n-1],w,value, n-1),
             knapsack(capacity,value, w,n-1))
 
+'''longest common sequence problem'''
+def lcs(s1,s2):
+    n=len(s1)
+    m=len(s2)
+    lis=[[0]*(m+1) for k in range(n+1)]
+    for j in range(n):
+        for k in range(m):
+            if s1[j]==s2[k]:
+                lis[j+1][k+1]=1+lis[j][k]
+            else:
+                lis[j+1][k+1]=max(lis[j][k+1],lis[j+1][k])
+    return lis
+
+def lcs_solution(X,Y,L):
+    solution=[]
+    j,k=len(X),len(Y)
+    while(L[j][k]>0):
+        if X[j-1]==Y[k-1]:
+            solution.append(X[j-1])
+            j -=1
+            k -=1
+        elif L[j-1][k]>L[j][k-1]:
+            j-=1
+        else:
+            k -=1
+        return ''.join(reversed(solution))
 
 #testing
 if __name__=="__main__":
@@ -94,6 +120,10 @@ if __name__=="__main__":
     capacity=50
     w=[10,20,30]
     n=len(w)
-    value=[60,100,120]
-    total=knapsack(capacity,w,value, n)
-    print(total)
+    #value=[60,100,120]
+    #total=knapsack(capacity,w,value, n)
+    #print(total)
+    lis=lcs("stone","longest")
+    print(lis)
+    #s=lcs_solution("stone","longest",lis)
+    #print(s)
