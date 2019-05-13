@@ -99,11 +99,12 @@ def lcs_solution(X,Y,L):
             solution.append(X[j-1])
             j -=1
             k -=1
-        elif L[j-1][k]>L[j][k-1]:
+        elif L[j-1][k]>=L[j][k-1]:
             j-=1
         else:
             k -=1
-        return ''.join(reversed(solution))
+    #print("end of while")
+    return ''.join(reversed(solution))
 
 #testing
 if __name__=="__main__":
@@ -125,5 +126,5 @@ if __name__=="__main__":
     #print(total)
     lis=lcs("stone","longest")
     print(lis)
-    #s=lcs_solution("stone","longest",lis)
-    #print(s)
+    s=lcs_solution("stone","longest",lis)
+    print(s)
