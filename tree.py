@@ -32,7 +32,7 @@ class Tree:
         return self.root()==p
     def is_leaf(self,p):
         '''return true if postion represent a leaf node'''
-        return self.num__children()==0
+        return self.num_childern(p)==0
     def is_empty(self):
         '''return true is tree has no elements'''
         return len(self)==0
@@ -68,14 +68,14 @@ class BinaryTree(Tree):
             return self.right(parent)
         else:
             return self.left(parent)
-        def children(self,p):
-            '''generate an iteration of positions representing p's children'''
-            if self.left(p) is not None:
-                yield self.left(p)
-            if self.right(p) is not None:
-                yield self.right(p)
+    def children(self,p):
+        '''generate an iteration of positions representing p's children'''
+        if self.left(p) is not None:
+            yield self.left(p)
+        if self.right(p) is not None:
+            yield self.right(p)
 
-class LinkedBinaryTree(Tree):
+class LinkedBinaryTree(BinaryTree):
     '''binary tree linked list implementation '''
     class _Node:
         '''Node class repesenting node in the tree'''
@@ -208,14 +208,18 @@ if __name__=='__main__':
     t=LinkedBinaryTree()
     #print(t.is_empty())
     p=t._add_root(10)
+    #p=t._add_root(10)
     #print(id(p))
     print(t.is_empty())
-    t._add_left(t._add_left(p,20),40)
+    t._add_left(p,40)
+
     t._add_right(p,30)
     print(t.num_childern(p))
-    print(t._size)
+    #print(t._size)
     print(p.element())
     print(t.parent(p))
     t._replace(p,80)
     print(p.element())
+    #t.hieght()
+    print(t.children(p))
     #t._add_left(20)
