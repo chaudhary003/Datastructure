@@ -47,7 +47,7 @@ class Tree:
         if self.is_leaf(p):
             return 0
         else:
-            return 1+max(self.hieght(c) for c in self.children(p))
+            return 1+max(self._hieght(c) for c in self.children(p))
     def hieght(self,p=None):
         if p is None:
             p=self.root()
@@ -220,6 +220,6 @@ if __name__=='__main__':
     print(t.parent(p))
     t._replace(p,80)
     print(p.element())
-    #t.hieght()
+    print(t.hieght())
     print(t.children(p))
     #t._add_left(20)
