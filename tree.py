@@ -52,6 +52,32 @@ class Tree:
         if p is None:
             p=self.root()
             return self._hieght(p)
+    def positions(self):
+        '''generate an iteratation of all the postions of tree T. '''
+        return self.preorder()
+    def preorder(self):
+        ''' generate a preorder iteration of positions of Tree '''
+        if not self.is_empty():
+            for p in self._pre_order(self.root()):
+                yield p
+    def _pre_order(self,p):
+        yield p
+        for c in self.children(p):
+            for other in self._pre_order(c):
+                yield other
+    def postorder(self):
+        if not self.is_empty():
+            for p in self._post_order(slef.root())
+            yield p
+    def _post_order(self,p):
+        for c in self.children(p):
+            for other in self._post_order(c):
+                yield other
+            yield p
+
+    def __iter__(self):
+        for p in self.positions():
+            yield p.element()
 class BinaryTree(Tree):
     def left(slef,p):
         '''return a position representating left child of postion p'''
@@ -74,6 +100,18 @@ class BinaryTree(Tree):
             yield self.left(p)
         if self.right(p) is not None:
             yield self.right(p)
+    def inoreder(self):
+        if not self.is_empty():
+            for p in self._inorder(self.root()):
+                yield p
+    def _inorder(self,p):
+        if self.left(p) is not None:
+            for other in self._inorder(self.left(p)):
+                yield other
+        yield p
+        if self.right() is not None:
+            for other in self._inorder(self.right(p)):
+                yield other
 
 class LinkedBinaryTree(BinaryTree):
     '''binary tree linked list implementation '''
