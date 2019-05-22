@@ -67,7 +67,7 @@ class Tree:
                 yield other
     def postorder(self):
         if not self.is_empty():
-            for p in self._post_order(slef.root())
+            for p in self._post_order(self.root())
             yield p
     def _post_order(self,p):
         for c in self.children(p):
@@ -79,10 +79,10 @@ class Tree:
         for p in self.positions():
             yield p.element()
 class BinaryTree(Tree):
-    def left(slef,p):
+    def left(self,p):
         '''return a position representating left child of postion p'''
         raise NotImplementedError("must be implemented by sub class")
-    def right(slef,p):
+    def right(self,p):
         '''return a position representating right child of postion p
            return None if p does not have a right child'''
         raise NotImplementedError("must be implemented by sub class")
