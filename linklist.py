@@ -8,7 +8,7 @@ class SinglyLinkedList:
        object in memory'''
     class _Node:
         '''Light weight class representing node objects in memory'''
-        __slot__='_next','_data'
+        __slots__='_next','_data'
         def __init__(self,data,next):
             self._next=next
             self._data=data
@@ -105,12 +105,12 @@ class LiknedQueue:
          if self.is_empty():
              raise Empty('queue is empty')
         else:
-            result=self._head._data
+            result=self._head
             self._head=self._head._next
             size -=1
             if self.is_empty():
                 self._tail=None
-            return result
+            return result._data
 
 class CircularQueue:
     '''class repesenting a circular queue using linkedlist'''
@@ -143,7 +143,7 @@ class CircularQueue:
         else:
             self._tail._next=head._next
             self._size -=1
-        return head
+        return head._data
     def enqueue(self):
         ''' add an elemnt at the end of queue'''
         newNode=self._Node(data,None)
@@ -214,6 +214,74 @@ class Deque(_DoublyLinkedListBase):
         if self.is_empty():
             raise Empty('deque is empty')
         return self._deleteNode(self._rareEnd._previous)
+
+class PositionalList(_DoublyLinkedListBase):
+    ''' A sequential container of elements allowing position base access'''
+    class Position:
+        ''' A non-public class representing location  of node'''
+        def __init(self,container,node):
+            self._container=container
+            self._node=node
+        def element(self):
+            return self._node._data
+        def __eq__(self,other):
+            ''' Return Ture if two positions pointing the same location'''
+            return type(other) is type(self) and other._node=self._node
+        def __ne__(self,other):
+            ''' Return true if other does not represent the same location'''
+            return not (self==other)
+    def _validate(self,p):
+        if not isinstance(p,self.Position):
+            raise TypeError('postion is not valid')
+        if p._container is not self:
+            raise ValueError('p doest not belong to this container')
+        if p._node._next is None:
+            raise ValueError('p does not exist')
+        return p._node
+    def _makePosition(self,node):
+        if node is self._frontEnd or self._rareEnd:
+            return None
+        else:
+            return self.Position(self, node)
+    def first(self):
+        return self._makePosition(self._frontEnd._next)
+    def last(self):
+        return self._makePosition(self._rareEnd._previous)
+    def before(self,p):
+        node= self._validate(p)
+        return self._makePosition(p._previous)
+    def after(self,p):
+        node=self._validate
+        return self._makePosition(p._next)
+    def __iter__(self):
+        cursor=self.first()
+        while cursor is not None:
+            yield cursor.element()
+            cursor=self.after(cursor)
+    def _insertBetween(self,element,predecessor,successor):
+        node=super()._insertBetween(element,predecessor,successor)
+        return self._makePosition(node)
+    def addFirst(self,element):
+        return self._insertBetween(element,self._frontEnd,self._frontEnd._next)
+    def addLast(self,element):
+        return self._insertBetween(element,self._rareEnd._previous,self._rareEnd)
+    def addBefore(self,p,element):
+        original=self._validate(p)
+        return _insertBetween(element,original._previous,original)
+    def addAfter(self,p,element):
+        original=self._validate(p)
+        return _insertBetween(element,original,original._next)
+    def delete(self,p):
+        original=self._validate(p)
+        return self._deleteNode(original)
+    def replace(self,p,element):
+        original=self._validate(p)
+        oldValue=original._data
+        original._data=element
+        return oldValue
+
+
+
 
 
 

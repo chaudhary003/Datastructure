@@ -105,6 +105,7 @@ def lcs_solution(X,Y,L):
             k -=1
     #print("end of while")
     return ''.join(reversed(solution))
+def matrix_chian()
 
 #testing
 if __name__=="__main__":
